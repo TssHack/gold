@@ -1,21 +1,25 @@
-const express = require('express');
-const axios = require('axios');
-const app = express();
+const express = require("express");
+const axios = require("axios");
 
-app.get('/gold', async (req, res) => {
+const app = express();
+const port = 3000;
+
+app.get("/gold", async (req, res) => {
   try {
-    const response = await axios.get('https://api.talasea.ir/api/market/getGoldPrice');
+    const response = await axios.get("https://api.talasea.ir/api/market/getGoldPrice");
     const data = response.data;
 
-    const pricePerSoot = parseInt(data.price);      // e.g., 6539
-    const pricePerGram = pricePerSoot * 100;        // e.g., 6539000
-    const change = parseFloat(data.change24h).toFixed(2); // e.g., -12.19
+    const price = data.price * 1000; // قیمت طلا به تومان
+    const formatted_price = price.toLocaleString(); // فرمت قیمت با کاما
+    const change_24h_percent = data.change24h;
+    const developer = "Ehsan Fazli";
 
+    // ایجاد پاسخ JSON
     const result = {
-      developer: "Ehsan Fazli",
-      price_toman: pricePerGram,
-      formatted_price: pricePerGram.toLocaleString('en-US'),
-      change_24h_percent: change,
+      developer,
+      price_toman: price,
+      formatted_price,
+      change_24h_percent,
       min_order_value: data.minOrderValue,
       min_sell_order_value: data.minSellOrderValue,
       fee_table: data.feeTable,
@@ -28,10 +32,11 @@ app.get('/gold', async (req, res) => {
 
     res.json(result);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch gold price data' });
+    console.error("Error fetching data:", error);
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 
-app.listen(3000, () => {
-  console.log('Server is running at http://localhost:3000/gold-price');
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
