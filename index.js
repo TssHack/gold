@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const app = express();
 
-app.get('/gold-price', async (req, res) => {
+app.get('/gold', async (req, res) => {
   try {
     const response = await axios.get('https://api.talasea.ir/api/market/getGoldPrice');
     const data = response.data;
@@ -12,6 +12,7 @@ app.get('/gold-price', async (req, res) => {
     const change = parseFloat(data.change24h).toFixed(2); // e.g., -12.19
 
     const result = {
+      developer: "Ehsan Fazli",
       price_toman: pricePerGram,
       formatted_price: pricePerGram.toLocaleString('en-US'),
       change_24h_percent: change,
@@ -22,8 +23,7 @@ app.get('/gold-price', async (req, res) => {
       min_deposit: data.minDeposit,
       max_deposit: data.maxDeposit,
       max_order_value: data.maxOrderValue,
-      fee: data.fee,
-      developer: "Ehsan Fazli"
+      fee: data.fee
     };
 
     res.json(result);
