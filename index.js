@@ -12,12 +12,7 @@ const names = {
     azadi: 'sekeb',
     eur: 'price_eur',
     bourse: 'bourse',
-    bank_sek: 'bank_sek',
     tgju_gold_irg18: 'tgju_gold_irg18',
-    'crypto-waves': 'crypto-waves',
-    'crypto-loopring-irc': 'crypto-loopring-irc',
-    'crypto-nem': 'crypto-nem',
-    sekeb: 'sekeb',
     mesghal: 'mesghal',
     geram24: 'geram24',
     geram18: 'geram18'
